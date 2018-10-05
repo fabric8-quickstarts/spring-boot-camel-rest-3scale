@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring       http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring">
+
+        <restConfiguration component="servlet" contextPath="api" apiContextPath="/openapi.json" scheme="http"/>
+
+        <!-- Override the default Camel Swagger doc with custom OpenAPI doc -->
+        <!--
+        <rest path="/" enableCORS="true">
+            <get id="openapi.json" produces="application/json" uri="openapi.json">
+                <description>Gets the openapi document for this service</description>
+                <route>
+                    <setHeader headerName="Exchange.CONTENT_TYPE">
+                        <constant>application/vnd.oai.openapi+json</constant>
+                    </setHeader>
+                    <setBody>
+                        <simple>resource:classpath:openapi.json</simple>
+                    </setBody>
+                </route>
+            </get>
+        </rest>
+        -->
+
+        <!-- User service -->
+        <rest path="users" bindingMode="json" enableCORS="true">
+            <description>Users Service</description>
+            <post id="greet" consumes="application/json" produces="application/text" uri="greet" type="io.fabric8.quickstarts.camel.User" outType="java.lang.String">
+                <description>Greet this Service with User credentials</description>
+                <responseMessage message="User added" code="200"/>
+                <to uri="bean:userService?method=greetUser"/>
+            </post>
+            <get id="list" produces="application/json" uri="list" outType="io.fabric8.quickstarts.camel.User[]">
+                <description>List users that used this service</description>
+                <responseMessage message="All users successfully returned" code="200"/>
+                <to uri="bean:userService?method=findUsers"/>
+            </get>
+        </rest>
+
+    </camelContext>
+
+</beans>

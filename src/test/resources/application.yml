@@ -1,0 +1,8 @@
+camel:
+  springboot:
+    name: CamelRest3Scale
+  component:
+    servlet:
+      mapping:
+        enabled: true
+        context-path: /camel-rest-3scale/*
