@@ -7,7 +7,7 @@
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-        <restConfiguration component="servlet" contextPath="api" apiContextPath="/openapi.json" scheme="http"/>
+        <restConfiguration component="servlet" contextPath="/camel-rest-3scale" apiContextPath="/openapi.json" scheme="http"/>
 
         <!-- Override the default Camel Swagger doc with custom OpenAPI doc -->
         <!--
