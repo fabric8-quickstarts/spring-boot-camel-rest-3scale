@@ -31,8 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- configure the versions you want to use here -->
-    <fabric8.version>3.0.11.fuse-710023-redhat-00001</fabric8.version>
-    <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
+    <fuse.version>7.1.0.fuse-710019-redhat-00002</fuse.version>
 
     <!-- Maven plugin versions -->
     <fabric8.maven.plugin.version>3.5-SNAPSHOT</fabric8.maven.plugin.version>
@@ -42,11 +41,10 @@
 
   <dependencyManagement>
     <dependencies>
-      <!-- import Fabric8 platform BOM first -->
       <dependency>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-project-bom-camel-spring-boot</artifactId>
-        <version>${fabric8.version}</version>
+        <groupId>org.jboss.redhat-fuse</groupId>
+        <artifactId>fuse-springboot-bom</artifactId>
+        <version>${fuse.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -144,9 +142,9 @@
       </plugin>
 
       <plugin>
-        <groupId>org.springframework.boot</groupId>
+        <groupId>org.jboss.redhat-fuse</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
+        <version>${fuse.version}</version>
         <executions>
           <execution>
             <goals>
@@ -157,9 +155,9 @@
       </plugin>
 
       <plugin>
-        <groupId>io.fabric8</groupId>
+        <groupId>org.jboss.redhat-fuse</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>${fabric8.maven.plugin.version}</version>
+        <version>${fuse.version}</version>
         <executions>
           <execution>
             <goals>
