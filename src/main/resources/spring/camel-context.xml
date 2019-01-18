@@ -7,8 +7,14 @@
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-        <restConfiguration component="servlet" contextPath="/camel-rest-3scale" apiContextPath="/openapi.json" scheme="http"/>
-
+        <restConfiguration component="servlet" contextPath="/camel-rest-3scale" apiContextPath="/api-doc"
+                           apiContextRouteId="doc-api" enableCORS="true" scheme="http">
+            <apiProperty key="api.title" value="User Service"/>
+            <apiProperty key="api.version" value="1.0"/>
+            <apiProperty key="api.specification.contentType.json" value="application/vnd.oai.openapi+json;version=2.0"/>
+            <apiProperty key="api.specification.contentType.yaml" value="application/vnd.oai.openapi;version=2.0"/>
+            <apiProperty key="cors" value="true"/>
+        </restConfiguration>
         <!-- Override the default Camel Swagger doc with custom OpenAPI doc -->
         <!--
         <rest path="/" enableCORS="true">
@@ -27,7 +33,7 @@
         -->
 
         <!-- User service -->
-        <rest path="users" bindingMode="json" enableCORS="true">
+        <rest path="/users" bindingMode="json" enableCORS="true">
             <description>Users Service</description>
             <post id="greet" consumes="application/json" produces="application/text" uri="greet" type="io.fabric8.quickstarts.camel.User" outType="java.lang.String">
                 <description>Greet this Service with User credentials</description>
