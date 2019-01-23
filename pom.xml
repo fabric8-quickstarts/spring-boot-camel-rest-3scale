@@ -31,10 +31,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- configure the versions you want to use here -->
-    <fuse.version>7.1.0.fuse-710019-redhat-00002</fuse.version>
+    <fuse.version>7.2.0.fuse-720020-redhat-00001</fuse.version>
 
     <!-- Maven plugin versions -->
-    <fabric8.maven.plugin.version>3.5-SNAPSHOT</fabric8.maven.plugin.version>
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
     <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
   </properties>
