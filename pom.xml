@@ -22,7 +22,7 @@
 
   <groupId>io.fabric8.quickstarts</groupId>
   <artifactId>spring-boot-camel-rest-3scale</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0.fuse-740005</version>
 
   <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel REST 3scale</name>
   <description>Spring Boot example running a Camel REST route exporting 3scale Service Metadata</description>
@@ -31,7 +31,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- configure the versions you want to use here -->
-    <fuse.version>7.2.0.fuse-720020-redhat-00001</fuse.version>
+    <fuse.version>7.4.0.fuse-740023</fuse.version>
 
     <!-- Maven plugin versions -->
     <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
