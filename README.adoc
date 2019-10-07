@@ -1,83 +1,143 @@
-# Spring Boot Camel REST 3scale QuickStart
+= Spring Boot Camel REST 3scale QuickStart
 
 This example demonstrates how to use Camel's REST DSL to expose a RESTful API and expose it to 3scale.
 
-This example relies on the [Fabric8 Maven plugin](https://maven.fabric8.io) for its build configuration
-and uses the [fabric8 Java base image](https://github.com/fabric8io/base-images#java-base-images).
+This example relies on the https://maven.fabric8.io[Fabric8 Maven plugin] for its build configuration
+and uses the https://github.com/fabric8io/base-images#java-base-images[fabric8 Java base image].
 
 The Fabric8 Maven Plugin discovers service metadata from Camel XML Context's service definition and exposes the following:
-#### Service Label
+
+=== Service Label
 * `discovery.3scale.net/discoverable`: Allows 3scale to select Services that are to be automatically exposed.
 
-#### Service Annotations
+=== Service Annotations
 * `discovery.3scale.net/discovery-version`: the version of the 3scale discovery process.
 * `discovery.3scale.net/scheme`: this can be http or https
 * `discovery.3scale.net/path`: (optional) the contextPath of the service if it's not at the root.
 * `discovery.3scale.net/description-path`: (optional) the path to the service description document (OpenAPI/Swagger). The path is either relative or an external full URL.
 
-### Building
+The application utilizes the Spring http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/ImportResource.html[`@ImportResource`] annotation to load a Camel Context definition via a _src/main/resources/spring/camel-context.xml_ file on the classpath.
 
-The example can be built with:
+IMPORTANT: This quickstart can run in 2 modes: standalone on your machine and on Kubernetes / OpenShift Cluster
 
-    $ mvn install
+== Deployment options
 
-This automatically generates the application resource descriptors and builds the Docker image, so it requires access to a Docker daemon, relying on the `DOCKER_HOST` environment variable by default.
+You can run this quickstart in the following modes:
 
-### Running the example locally
+* Kubernetese / Single-node OpenShift cluster
+* Standalone on your machine
 
-The example can be run locally using the following Maven goal:
+The most effective way to run this quickstart is to deploy and run the project on OpenShift.
 
-    $ mvn spring-boot:run
+For more details about running this quickstart on a single-node OpenShift cluster, CI/CD deployments, as well as the rest of the runtime, see the link:http://appdev.openshift.io/docs/spring-boot-runtime.html[Spring Boot Runtime Guide].
 
-Alternatively, you can run the application locally using the executable JAR produced:
+== Running the Quickstart on a single-node Kubernetes/OpenShift cluster
 
-    $ java -jar -Dspring.profiles.active=dev target/spring-boot-camel-rest-3scale-1.0-SNAPSHOT.jar
+IMPORTANT: You need to run this example on Container Development Kit 3.3 or OpenShift 3.7.
+Both of these products have suitable Fuse images pre-installed.
+If you run it in an environment where those images are not preinstalled follow the steps described in <<single-node-without-preinstalled-images>>.
 
-You can then access the REST API directly from your Web browser, e.g.:
+A single-node Kubernetes/OpenShift cluster provides you with access to a cloud environment that is similar to a production environment.
 
-- <http://localhost:8080/camel-rest-3scale/users/greet>
-- <http://localhost:8080/camel-rest-3scale/users/list>
+If you have a single-node Kubernetes/OpenShift cluster, such as Minishift or the Red Hat Container Development Kit, link:http://appdev.openshift.io/docs/minishift-installation.html[installed and running], you can deploy your quickstart there.
 
-### Running the example in Kubernetes / OpenShift
+. Log in to your OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc login -u developer -p developer
+----
 
-It is assumed a Kubernetes / OpenShift platform is already running. If not, you can find details how to [get started](http://fabric8.io/guide/getStarted/index.html).
+. Create a new OpenShift project for the quickstart:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc new-project MY_PROJECT_NAME
+----
 
-The example can be built and deployed using a single goal:
+. Change the directory to the folder that contains the extracted quickstart application (for example, `my_openshift/spring-boot-camel-rest-3scale`) :
++
+or
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ cd my_openshift/spring-boot-camel-rest-3scale
+----
 
-    $ mvn fabric8:run
+. Build and deploy the project to the OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ mvn clean -DskipTests fabric8:deploy -Popenshift
+----
 
-You can use the Kubernetes or OpenShift client tool to inspect the status, e.g.:
+. In your browser, navigate to the `MY_PROJECT_NAME` project in the OpenShift console.
+Wait until you can see that the pod for the `spring-boot-camel-rest-3scale` has started up.
 
-- To list all the running pods:
-    ```
-    $ kubectl get pods
-    ```
+. On the project's `Overview` page, navigate to the details page deployment of the `spring-boot-camel-rest-3scale` application: `https://OPENSHIFT_IP_ADDR:8443/console/project/MY_PROJECT_NAME/browse/pods/spring-boot-camel-rest-3scale-NUMBER_OF_DEPLOYMENT?tab=details`.
 
-- or on OpenShift:
-    ```
-    $ oc get pods
-    ```
+. Switch to tab `Logs` and then see the log from Camel.
 
-- Then find the name of the pod that runs this example, and output the logs from the running pod with:
-    ```
-    $ kubectl logs <pod_name>
-    ```
+[#single-node-without-preinstalled-images]
+=== Running the Quickstart on a single-node Kubernetes/OpenShift cluster without preinstalled images
 
-- or on OpenShift:
-    ```
-    $ oc logs <pod_name>
-    ```
+A single-node Kubernetes/OpenShift cluster provides you with access to a cloud environment that is similar to a production environment.
 
-You can also use the Fabric8 [Web console](http://fabric8.io/guide/console.html) to manage the running pods, view logs and much more.
+If you have a single-node Kubernetes/OpenShift cluster, such as Minishift or the Red Hat Container Development Kit, link:http://appdev.openshift.io/docs/minishift-installation.html[installed and running], you can deploy your quickstart there.
 
-### Accessing the REST service
 
-When the example is running, a REST service is available to list users that have called this service. The user information comes from 3scale extensions to autofill API keys. 
+. Log in to your OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc login -u developer -p developer
+----
+
+. Create a new OpenShift project for the quickstart:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc new-project MY_PROJECT_NAME
+----
+
+. Import base images in your newly created project (MY_PROJECT_NAME):
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ oc import-image fis-java-openshift:2.0 --from=registry.access.redhat.com/jboss-fuse-6/fis-java-openshift:2.0 --confirm
+----
+
+. Change the directory to the folder that contains the extracted quickstart application (for example, `my_openshift/spring-boot-camel-rest-3scale`) :
++
+or
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ cd my_openshift/spring-boot-camel-rest-3scale
+----
+
+. Build and deploy the project to the OpenShift cluster:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ mvn clean -DskipTests fabric8:deploy -Popenshift  -Dfabric8.generator.fromMode=istag -Dfabric8.generator.from=MY_PROJECT_NAME/fis-java-openshift:2.0
+----
+
+. In your browser, navigate to the `MY_PROJECT_NAME` project in the OpenShift console.
+Wait until you can see that the pod for the `spring-boot-camel-rest-3scale` has started up.
+
+. On the project's `Overview` page, navigate to the details page deployment of the `spring-boot-camel-rest-3scale` application: `https://OPENSHIFT_IP_ADDR:8443/console/project/MY_PROJECT_NAME/browse/pods/spring-boot-camel-rest-3scale-NUMBER_OF_DEPLOYMENT?tab=details`.
+
+. Switch to tab `Logs` and then see the log from Camel.
+
+== Accessing the REST service
+
+When the example is running, a REST service is available to list users that have called this service. The user information comes from 3scale extensions to autofill API keys.
 
 * `"x-data-threescale-name": "app_ids"` for the parameter that represents the application ID.
 * `"x-data-threescale-name": "app_keys"` or `"x-data-threescale-name": "user_keys"` for the parameter that represents the application or user key.
 
-Notice: As it depends on your OpenShift setup, the hostname (route) might vary. Verify with `oc get routes` which hostname is valid for you. Add the `-Dfabric8.deploy.createExternalUrls=true` option to your Maven commands if you want it to deploy a Route configuration for the service.
+Notice: As it depends on your OpenShift setup, the hostname (route) might vary. Verify with `oc get routes` which hostname is valid for you.
 
 The actual endpoint is using the _context-path_ `camel-rest-3scale/users` and the REST service provides two services:
 
@@ -86,13 +146,40 @@ The actual endpoint is using the _context-path_ `camel-rest-3scale/users` and th
 
 You can then access these services from your Web browser, e.g.:
 
-- <http://qs-camel-rest-3scale.vagrant.f8/camel-rest-3scale/users/greet>
-- <http://qs-camel-rest-3scale.vagrant.f8/camel-rest-3scale/users/list>
+- <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/users/greet>
+- <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/users/list>
 
-### Swagger API
+== Swagger API
 
-The example provides API documentation of the service using Swagger using the _context-path_ `camel-rest-3scale/openapi.json`. You can access the API documentation from your Web browser at <http://qs-camel-rest-3scale.vagrant.f8/camel-rest-3scale/openapi.json>.
+The example provides API documentation of the service using Swagger using the _context-path_ `camel-rest-3scale/api-doc`. You can access the API documentation from your Web browser at <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/api-doc>.
 
-### More details
+== Running the quickstart standalone on your machine
 
-You can find more details about running this [quickstart](http://fabric8.io/guide/quickstarts/running.html) on the website. This also includes instructions how to change the Docker image user and registry.
+To run this quickstart as a standalone project on your local machine:
+
+. Download the project and extract the archive on your local filesystem.
+. Build the project:
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ cd PROJECT_DIR
+$ mvn clean package
+----
+. Run the service:
+
++
+[source,bash,options="nowrap",subs="attributes+"]
+----
+$ mvn spring-boot:run
+----
++
+Alternatively, you can run the application locally using the executable JAR produced:
++
+----
+$ java -jar -Dspring.profiles.active=dev target/spring-boot-camel-rest-3scale-1.0-SNAPSHOT.jar
+----
+
+. You can then access the REST API directly from your Web browser, e.g.:
+
+- <http://localhost:8080/camel-rest-3scale/users/greet>
+- <http://localhost:8080/camel-rest-3scale/users/list>
