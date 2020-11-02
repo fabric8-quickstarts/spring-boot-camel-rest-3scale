@@ -1,0 +1,11 @@
++
+Alternatively, you can run the application locally using the executable JAR produced:
++
+----
+$ java -jar -Dspring.profiles.active=dev target/spring-boot-camel-rest-3scale-1.0-SNAPSHOT.jar
+----
+
+. You can then access the REST API directly from your Web browser, e.g.:
+
+- <http://localhost:8080/camel-rest-3scale/users/greet>
+- <http://localhost:8080/camel-rest-3scale/users/list>

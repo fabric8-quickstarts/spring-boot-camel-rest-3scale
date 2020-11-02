@@ -1,0 +1,23 @@
+
+== Accessing the REST service
+
+When the example is running, a REST service is available to list users that have called this service. The user information comes from 3scale extensions to autofill API keys.
+
+* `"x-data-threescale-name": "app_ids"` for the parameter that represents the application ID.
+* `"x-data-threescale-name": "app_keys"` or `"x-data-threescale-name": "user_keys"` for the parameter that represents the application or user key.
+
+Notice: As it depends on your OpenShift setup, the hostname (route) might vary. Verify with `oc get routes` which hostname is valid for you.
+
+The actual endpoint is using the _context-path_ `camel-rest-3scale/users` and the REST service provides two services:
+
+- `users/greet`: to use 3scale API keys to add a user to this service's list of calling users
+- `users/list`: to list all users that have called the service
+
+You can then access these services from your Web browser, e.g.:
+
+- <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/users/greet>
+- <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/users/list>
+
+== Swagger API
+
+The example provides API documentation of the service using Swagger using the _context-path_ `camel-rest-3scale/api-doc`. You can access the API documentation from your Web browser at <http://spring-boot-camel-rest-3scale-MY_PROJECT_NAME.OPENSHIFT_IP_ADDR.nip.io/camel-rest-3scale/api-doc>.
