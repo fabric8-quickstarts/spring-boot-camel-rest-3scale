@@ -2,10 +2,10 @@
 
 This example demonstrates how to use Camel's REST DSL to expose a RESTful API and expose it to 3scale.
 
-This example relies on the https://maven.fabric8.io[Fabric8 Maven plugin] for its build configuration
+This example relies on the https://www.eclipse.org/jkube/docs/openshift-maven-plugin[Openshift Maven plugin] for its build configuration
 and uses the https://github.com/fabric8io/base-images#java-base-images[fabric8 Java base image].
 
-The Fabric8 Maven Plugin discovers service metadata from Camel XML Context's service definition and exposes the following:
+The Openshift Maven Plugin discovers service metadata from Camel XML Context's service definition and exposes the following:
 
 === Service Label
 * `discovery.3scale.net/discoverable`: Allows 3scale to select Services that are to be automatically exposed.
