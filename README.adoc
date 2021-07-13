@@ -8,7 +8,7 @@ and uses the https://github.com/fabric8io/base-images#java-base-images[fabric8 J
 The Openshift Maven Plugin discovers service metadata from Camel XML Context's service definition and exposes the following:
 
 === Service Label
-* `discovery.3scale.net/discoverable`: Allows 3scale to select Services that are to be automatically exposed.
+* `discovery.3scale.net`: Allows 3scale to select Services that are to be automatically exposed.
 
 === Service Annotations
 * `discovery.3scale.net/discovery-version`: the version of the 3scale discovery process.
